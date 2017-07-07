@@ -6,6 +6,7 @@ dist
 /*.svg
 /*.woff2 
 /*.woff
+/*bundle.git
 !src/*.ttf
 !src/*.woff
 !src/*.woff2
