@@ -1,0 +1,12 @@
+node_modules
+nbproject
+dist
+/*.ttf
+/*.eot
+/*.svg
+/*.woff2 
+/*.woff
+!src/*.ttf
+!src/*.woff
+!src/*.woff2
+!src/*.svg 
