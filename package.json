@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "server": "webpack-dev-server --content-base --port 3333"
+    "server": "webpack-dev-server --content-base ./src --port 3333"
   },
   "author": "",
   "license": "ISC",
@@ -27,8 +27,11 @@
     "bootstrap-loader": "^2.1.0",
     "bootstrap-sass": "^3.3.7",
     "css-loader": "^0.28.4",
+    "csv-loader": "^2.1.1",
     "d3": "^4.9.1",
+    "d3-ng2-service": "^1.15.0",
     "d3-quadtree": "^1.0.3",
+    "dsv-file-loader": "^0.1.1",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.29.0",

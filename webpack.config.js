@@ -16,7 +16,8 @@ module.exports = {
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.html$/, loader: 'raw-loader'},
             {test: /\.js$/, loader: 'babel-loader', exclude: [/(dist|node_modules)/], query: {presets: ['es2015']}},
-            {test: /\.(eot|svg|ttf|woff|woff2)$/, loader: 'file-loader'}
+            {test: /\.(eot|svg|ttf|woff|woff2)$/, loader: 'file-loader'},
+            {test: /\.csv$/, loader: 'csv-loader', options: {dynamicTyping: true, header: true, skipEmptyLines: true}}
         ]
     },
     plugins: [

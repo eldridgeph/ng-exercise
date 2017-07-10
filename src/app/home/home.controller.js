@@ -1,6 +1,8 @@
 import LoginService from '../login/login.service';
 import * as d3 from 'd3';
-import d3Image from './d3.svg';
+import d3Image from './assets/d3.svg';
+import d3FlareCsv from './assets/flare.csv';
+global.d3 = d3;
 
 export default class HomeController {
     constructor() {
@@ -10,8 +12,38 @@ export default class HomeController {
         LoginService.isAuthenticated = false;
     }
     $onInit() {
+        this.initD3();
+        this.getBubbleChartCsv();
+    }
+    initD3() {
+        let svgContainer = d3.select("#d3-init")
+                .attr("width", "100%")
+                .attr("height", 100)
+                .attr("style", "border:solid green 1px;")
 
-        let svg = d3.select("svg"),
+        let circleSettings = [
+            {diameter: 40, color: 'green'},
+            {diameter: 30, color: 'blue'},
+            {diameter: 20, color: 'purple'},
+        ]
+        let circles = svgContainer.selectAll("circle")
+                .data(circleSettings)
+                .enter()
+                .append("circle")
+
+        let circleAttributes = circles
+                .attr("cx", 50)
+                .attr("cy", 50)
+                .attr("r", function (circleSetting) {
+                    return circleSetting.diameter;
+                })
+                .style("fill", function (circleSetting) {
+                    return circleSetting.color;
+                });
+    }
+    getBubbleChartCsv() {
+
+        let svg = d3.select("#d3-bubble-chart"),
                 width = +svg.attr("width"),
                 height = +svg.attr("height"),
                 format = d3.format(",d"),
@@ -96,6 +128,5 @@ export default class HomeController {
                         return d.id + "\n" + format(d.value);
                     });
         }
-
     }
 }
