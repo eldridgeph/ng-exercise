@@ -11,7 +11,6 @@ export default angular
         .component('languageSelect', component)
         .name;
 
-
 function languageTranslation($translateProvider) {
     $translateProvider.translations('en', {
         'en': 'English',
