@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "server": "webpack-dev-server --content-base ./src --port 3333"
+    "server": "webpack-dev-server --content-base ./client --port 3333"
   },
   "author": "",
   "license": "ISC",

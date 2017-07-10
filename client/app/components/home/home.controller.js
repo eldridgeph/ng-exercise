@@ -1,8 +1,7 @@
-import LoginService from '../login/login.service';
+import LoginService from '../../components/login/login.service';
 import * as d3 from 'd3';
 import d3Image from './assets/d3.svg';
 import d3FlareCsv from './assets/flare.csv';
-global.d3 = d3;
 
 export default class HomeController {
     constructor() {

@@ -1,11 +1,10 @@
-
 let webpack = require('webpack');
 let OpenBrowserPlugin = require('open-browser-webpack-plugin');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        app: './src/app/app.js'
+        app: './client/app/app.js'
     },
     output: {
         path: __dirname,
@@ -22,7 +21,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'src/index.html',
+            template: 'client/index.html',
             inject: 'body',
             hash: true
         }),

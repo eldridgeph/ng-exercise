@@ -5,14 +5,15 @@ import ngSanitize from 'angular-sanitize';
 import './app.css';
 import 'bootstrap-loader';
 
-import {LoginComponent, AppComponent, HomeComponent, LanguageComponent} from './app.component';
+import Common from './common/common';
+import Components from './components/components';
+import AppComponent from './app.component';
 
 angular
         .module('food-app', [
             ngTranslate,
             ngSanitize,
-            LoginComponent,
-            HomeComponent,
-            LanguageComponent
+            Common,
+            Components
         ])
         .component('appView', AppComponent);
