@@ -2,6 +2,6 @@
     <button type="button" class="btn btn-default" 
             ng-repeat="language in $ctrl.languages" 
             ng-click="$ctrl.setLanguage(language.key)"
-            ng-class="{'btn-info': $ctrl.language === language.key}"
+            ng-class="{'btn-info': $ctrl.getLanguage() === language.key}"
             title="{{language.key | translate}}">{{language.key}}</button>
 </div>

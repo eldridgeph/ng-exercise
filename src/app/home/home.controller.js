@@ -1,13 +1,13 @@
 import LoginService from '../login/login.service';
 import * as d3 from 'd3';
-import D3SvgFile from './d3.svg';
+import d3Image from './d3.svg';
 
 export default class HomeController {
     constructor() {
-        this.d3ImageUrl = D3SvgFile;
+        this.d3ImageUrl = d3Image;
     }
     logout() {
-        LoginService.isuthenticated = false;
+        LoginService.isAuthenticated = false;
     }
     $onInit() {
 
