@@ -5,7 +5,8 @@ import controller from './app.controller';
 
 import HomeComponent from './home/home.component';
 import LoginComponent from './login/login.component';
+import LanguageComponent from './language/language.component';
 
 let AppComponent = {template, controller};
 
-export {AppComponent, LoginComponent, HomeComponent};
+export {AppComponent, LoginComponent, HomeComponent, LanguageComponent};

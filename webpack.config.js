@@ -1,6 +1,7 @@
 
 let webpack = require('webpack');
 let OpenBrowserPlugin = require('open-browser-webpack-plugin');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -19,6 +20,11 @@ module.exports = {
         ]
     },
     plugins: [
+        new HtmlWebpackPlugin({
+            template: 'src/index.html',
+            inject: 'body',
+            hash: true
+        }),
         new webpack.ProvidePlugin({
             $: "jQuery",
             jQuery: "jQuery",

@@ -1,18 +1,18 @@
 import angular from 'angular';
-import angularTranslate from 'angular-translate';
-import angularSanitize from 'angular-sanitize';
+import ngTranslate from 'angular-translate';
+import ngSanitize from 'angular-sanitize';
 
 import './app.css';
 import 'bootstrap-loader';
 
-import {LoginComponent, AppComponent, HomeComponent} from './app.component';
-import {LoginService} from './app.service.js';
+import {LoginComponent, AppComponent, HomeComponent, LanguageComponent} from './app.component';
 
 angular
         .module('food-app', [
-            angularTranslate,
-            angularSanitize,
+            ngTranslate,
+            ngSanitize,
             LoginComponent,
-            HomeComponent
+            HomeComponent,
+            LanguageComponent
         ])
         .component('appView', AppComponent);
