@@ -5,7 +5,7 @@ export default class AppController {
 
     }
     $onInit($timeout) {
-//            this.login();
+            this.login();
     }
     isLoggedIn() {
         return !!LoginService.isAuthenticated;

@@ -14,7 +14,7 @@ export default class LanguageController {
     setLanguage(value) {
         this.language = value;
         SessionService.language = this.language;
-        this.translation.useSanitizeValueStrategy(this.language);
+        this.translation.use(this.language);
     }
 
     getLanguage() {
