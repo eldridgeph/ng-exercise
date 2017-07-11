@@ -1,15 +1,14 @@
 import angular from 'angular';
 import template from './home.html';
 import controller from './home.controller';
-import * as d3 from 'd3';
- 
-let componentAttrs = {
+
+let component = {
     template, controller
 };
 
 export default angular
         .module('home', [])
-        .component('homeView', componentAttrs)
+        .component('homeView', component)
         .config(homeTranslationConfig)
         .name;
 
@@ -24,4 +23,5 @@ function homeTranslationConfig($translateProvider) {
     });
 
     $translateProvider.preferredLanguage('en');
+    $translateProvider.useSanitizeValueStrategy('escapeParameters');
 }
