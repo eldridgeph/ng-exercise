@@ -8,13 +8,17 @@ import './home.css';
 
 export default class HomeController {
 
-    constructor($log, $interval, $timeout) {
+    constructor($log, $interval, $timeout, $scope) {
+        this.$scope = $scope;
         this.$interval = $interval;
         this.$timeout = $timeout;
         this.$log = $log;
     }
     logout() {
         LoginService.isAuthenticated = false;
+    }
+    animationTabOpened() {
+        this.$scope.$broadcast('tab.animation.opened', {});
     }
     $onInit() {
     }

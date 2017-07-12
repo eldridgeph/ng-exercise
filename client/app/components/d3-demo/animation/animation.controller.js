@@ -1,12 +1,16 @@
 import * as d3 from 'd3';
 
 export default class  AnimationController {
-    constructor($interval, $timeout) {
+    constructor($interval, $timeout, $scope) {
         this.$timeout = $timeout;
         this.$interval = $interval;
+        this.$scope = $scope;
     }
     $onInit() {
         let self = this;
+        self.$scope.$on('tab.animation.opened',function(){
+            
+        });
         self.$timeout(function () {
             self.initBubbleAnimation();
         });
@@ -32,7 +36,7 @@ export default class  AnimationController {
 
         let pack = d3.layout.pack();
 
-        pack = pack.padding(2).size([800, 600]).sort(function (a, b) {
+        pack = pack.padding(2).size([300, 500]).sort(function (a, b) {
             return b.value - a.value;
         });
 
@@ -45,8 +49,7 @@ export default class  AnimationController {
         let color = d3.scale.category20();
         let svg = d3.select('#d3-bubbles')
                 .attr('width', '100%')
-                .attr('height', '600')
-                .style('border', 'solid green 1px');
+                .attr('height', '600');
 
         nodes.forEach(function (node) {
 
@@ -59,7 +62,6 @@ export default class  AnimationController {
                         cy: node.y,
                         r: node.r,
                         fill: color(node.country),
-                        stroke: '#444',
                     });
 
             nodeGroup

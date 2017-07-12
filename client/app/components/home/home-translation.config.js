@@ -1,12 +1,11 @@
+import languages from 'dir-loader!./languages/config.js';
+import angular from 'angular';
+
 export default function ($translateProvider) {
 
-    $translateProvider.translations('en', {
-        'LOGOUT': 'Logout',
-        'BASIC': 'Basic'
-    });
-
-    $translateProvider.translations('de', {
-        'LOGOUT': 'Ausloggen'
+    angular.forEach(languages, function (language, file) {
+        let langCode = file.replace(/\.json/, '');
+        $translateProvider.translations(langCode, language.src);
     });
 
     $translateProvider.preferredLanguage('en');

@@ -20,8 +20,7 @@ export default class BasicController {
 
             let svgContainer = d3.select("#d3-init")
                     .attr("width", "100%")
-                    .attr("height", 100)
-                    .style('border', "solid green 1px;")
+                    .attr("height", 100) 
 
             let circleSettings = [
                 {diameter: 40, color: 'green'},
@@ -63,8 +62,7 @@ export default class BasicController {
                 })
                 .interpolate("basis");
 
-        d3.select("#line-interpolation")
-                .style('border', "solid green 1px;")
+        d3.select("#line-interpolation") 
                 .attr("width", "100%")
                 .attr("height", 100)
                 .append("path")
@@ -87,8 +85,7 @@ export default class BasicController {
 
         let svgContainer = d3.select("#d3-grouping")
                 .attr("width", "100%")
-                .attr("height", 200)
-                .style('border', "solid green 1px;");
+                .attr("height", 200) ;
 
         let get = function (attr) {
             return function (d) {

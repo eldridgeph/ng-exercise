@@ -2,10 +2,12 @@ import * as d3 from 'd3';
 import d3GraphData from './graph.data.csv';
 
 export default class GraphController {
-    constructor($timeout) {
+    constructor($timeout, $element) {
+        this.$element = $element;
         this.$timeout = $timeout;
     }
     $onInit() {
+        console.log('$element', this.$element[0].getBoundingClientRect());
         let self = this;
         self.$timeout(function () {
             self.initGraphScale();
@@ -14,7 +16,6 @@ export default class GraphController {
     }
     initGraphScale() {
         let svgContainer = d3.select("#d3-axes")
-                .style('border', 'solid green 1px')
                 .attr("width", '100%')
                 .attr("height", 100);
 
@@ -25,10 +26,11 @@ export default class GraphController {
         let xAxis = d3.svg.axis()
                 .scale(axisScale);
 
-        let xAxisGroup = svgContainer.append("g")
+        svgContainer.append("g")
                 .call(xAxis);
     }
     initDualAxesGraph() {
+
         let margin = {top: 30, right: 40, bottom: 30, left: 50},
                 width = 600 - margin.left - margin.right,
                 height = 270 - margin.top - margin.bottom;
@@ -58,7 +60,6 @@ export default class GraphController {
                 });
 
         let svg = d3.select("#d3-dual-axes")
-                .style("border", "solid green 1px")
                 .attr("width", '100%')
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
