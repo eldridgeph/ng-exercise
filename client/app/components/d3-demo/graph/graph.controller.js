@@ -1,36 +1,38 @@
 import * as d3 from 'd3';
+import d3GraphData from './graph.data.csv';
 
-export default class AxesComponent {
-
-    constructor() {
-
+export default class GraphController {
+    constructor($timeout) {
+        this.$timeout = $timeout;
     }
-
-    data(data, callback) {
-
-        this.data.value = data;
-
-        if (callback) {
-            for (let index in data) {
-                let item = data[index];
-                if (callback(item) === false)
-                    break;
-            }
-        }
-
-        return this;
+    $onInit() {
+        let self = this;
+        self.$timeout(function () {
+            self.initGraphScale();
+            self.initDualAxesGraph();
+        });
     }
+    initGraphScale() {
+        let svgContainer = d3.select("#d3-axes")
+                .style('border', 'solid green 1px')
+                .attr("width", '100%')
+                .attr("height", 100);
 
-    addAxis(axis) {
+        let axisScale = d3.scale.linear()
+                .domain([0, 100])
+                .range([0, 400]);
 
+        let xAxis = d3.svg.axis()
+                .scale(axisScale);
+
+        let xAxisGroup = svgContainer.append("g")
+                .call(xAxis);
     }
-
-    draw() {
-
-        let data = this.data.value;
+    initDualAxesGraph() {
         let margin = {top: 30, right: 40, bottom: 30, left: 50},
                 width = 600 - margin.left - margin.right,
                 height = 270 - margin.top - margin.bottom;
+        let parseDate = d3.time.format("%d-%b-%y").parse;
 
         let x = d3.time.scale().range([0, width]);
         let y0 = d3.scale.linear().range([height, 0]);
@@ -60,17 +62,27 @@ export default class AxesComponent {
                 .attr("width", '100%')
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                .attr("transform",
+                        "translate(" + margin.left + "," + margin.top + ")");
+
+        let data = d3GraphData;
+
+        for (var index in data) {
+            var stat = data[index];
+            if (typeof stat.date === 'string') {
+                stat.date = parseDate(stat.date);
+            } else {
+                break;
+            }
+        }
 
         // Scale the range of the data
         x.domain(d3.extent(data, function (d) {
             return d.date;
         }));
-
         y0.domain([0, d3.max(data, function (d) {
                 return Math.max(d.close);
             })]);
-
         y1.domain([0, d3.max(data, function (d) {
                 return Math.max(d.open);
             })]);
@@ -97,5 +109,6 @@ export default class AxesComponent {
                 .attr("transform", "translate(" + width + " ,0)")
                 .style("fill", "red")
                 .call(yAxisRight);
+
     }
 }

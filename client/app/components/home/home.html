@@ -11,12 +11,17 @@
             </center>
         </div>
     </div>
-    <svg width="960" height="960" font-family="sans-serif" font-size="10" text-anchor="middle" id="d3-init"></svg> 
-    <svg width="960" height="960" font-family="sans-serif" font-size="10" text-anchor="middle" id="line-interpolation"></svg> 
-    <svg width="960" height="960" font-family="sans-serif" font-size="10" text-anchor="middle" id="d3-grouping"></svg> 
-    <svg width="960" height="960" font-family="sans-serif" font-size="10" text-anchor="middle" id="d3-axes"></svg> 
-    <svg width="960" height="960" font-family="sans-serif" font-size="10" text-anchor="middle" id="d3-dual-axes"></svg> 
-    <svg width="960" height="960" font-family="sans-serif" font-size="10" text-anchor="middle" id="d3-bubbles"></svg> 
-    <!--<svg width="960" height="960" font-family="sans-serif" font-size="10" text-anchor="middle" id="d3-bubble-chart"></svg>--> 
-    <img width="960" height="500" ng-src="{{$ctrl.d3ImageUrl}}">
+
+    <uib-tabset active="active">
+        <uib-tab index="0" heading="{{'BASIC'| translate}}">
+            <d3-demo-basic></d3-demo-basic>
+        </uib-tab>
+        <uib-tab index="1" heading="{{'GRAPH'| translate}}">
+            <d3-demo-graph></d3-demo-graph>
+        </uib-tab>
+        <uib-tab index="2" heading="{{'ANIMATION'| translate}}">
+            <d3-demo-animation></d3-demo-animation>
+        </uib-tab>
+    </uib-tabset>
+
 </div>

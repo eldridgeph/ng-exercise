@@ -1,27 +1,20 @@
 import angular from 'angular';
 import template from './home.html';
 import controller from './home.controller';
+import translation from './home-translation.config';
+
+import angularUiBootstrapTabs from 'angular-ui-bootstrap/src/tabs';
+import D3DemoComponents from '../d3-demo/d3-demo.component';
 
 let component = {
     template, controller
 };
 
 export default angular
-        .module('home', [])
+        .module('home', [
+            angularUiBootstrapTabs,
+            D3DemoComponents
+        ])
         .component('homeView', component)
-        .config(homeTranslationConfig)
+        .config(translation)
         .name;
-
-
-function homeTranslationConfig($translateProvider) {
-    $translateProvider.translations('en', {
-        'LOGOUT': 'Logout'
-    });
-
-    $translateProvider.translations('de', {
-        'LOGOUT': 'Ausloggen'
-    });
-
-    $translateProvider.preferredLanguage('en');
-    $translateProvider.useSanitizeValueStrategy('escapeParameters');
-}
