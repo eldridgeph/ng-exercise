@@ -1,6 +1,8 @@
 import * as d3 from 'd3';
+import {event as d3Event} from 'd3';
 import angular from 'angular';
 import d3LogoUrl from './assets/d3-logo.svg';
+import * as d3Behavior from '../../../common/d3/behavior/behavior';
 
 export default class BasicController {
     constructor($timeout) {
@@ -20,7 +22,7 @@ export default class BasicController {
 
             let svgContainer = d3.select("#d3-init")
                     .attr("width", "100%")
-                    .attr("height", 100) 
+                    .attr("height", 100)
 
             let circleSettings = [
                 {diameter: 40, color: 'green'},
@@ -39,7 +41,9 @@ export default class BasicController {
                     })
                     .style("fill", function (circleSetting) {
                         return circleSetting.color;
-                    });
+                    })
+                    .call(d3Behavior.draggable)
+                    .call(d3Behavior.bounce);
         });
     }
     initLineInterpolation() {
@@ -62,7 +66,7 @@ export default class BasicController {
                 })
                 .interpolate("basis");
 
-        d3.select("#line-interpolation") 
+        d3.select("#line-interpolation")
                 .attr("width", "100%")
                 .attr("height", 100)
                 .append("path")
@@ -85,7 +89,7 @@ export default class BasicController {
 
         let svgContainer = d3.select("#d3-grouping")
                 .attr("width", "100%")
-                .attr("height", 200) ;
+                .attr("height", 200);
 
         let get = function (attr) {
             return function (d) {

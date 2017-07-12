@@ -7,8 +7,8 @@ export default class GraphController {
         this.$timeout = $timeout;
     }
     $onInit() {
-        console.log('$element', this.$element[0].getBoundingClientRect());
         let self = this;
+
         self.$timeout(function () {
             self.initGraphScale();
             self.initDualAxesGraph();
@@ -32,7 +32,7 @@ export default class GraphController {
     initDualAxesGraph() {
 
         let margin = {top: 30, right: 40, bottom: 30, left: 50},
-                width = 600 - margin.left - margin.right,
+                width = 400 - margin.left - margin.right,
                 height = 270 - margin.top - margin.bottom;
         let parseDate = d3.time.format("%d-%b-%y").parse;
 
