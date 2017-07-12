@@ -4,8 +4,23 @@ class Bounce {
     constructor(scope) {
 
         this.d3Scope = scope;
-        this.parentNode = d3.select(this.d3Scope[0].parentNode);
+        let scopeParent = this.d3Scope[0].parentNode, breaker = 0;
 
+        while (!(scopeParent && scopeParent.tagName === 'svg')) {
+
+            scopeParent = scopeParent.parentNode;
+            this.parentNode = d3.select(scopeParent);
+
+            if (scopeParent.tagName === 'svg') {
+                break;
+            }
+            if (breaker >= 100) {
+                break;
+            }
+            breaker++;
+        }
+
+        this.parentNode = d3.select(scopeParent);
         let parentHeight = this.parentNode.attr('height');
 
         this.d3Scope
@@ -13,18 +28,26 @@ class Bounce {
                 .each(function () {
 
                     let origY;
+                    let isCircle = this.tagName === 'circle';
+                    let yAxisAttr = isCircle ? 'cy' : 'y';
+                    let heightAttr = isCircle ? 'r' : 'height';
+
                     let shape = d3.select(this);
+                    let height = isCircle ? shape.attr('r') : shape.attr('height');
+
+                    shape.attr(yAxisAttr, (parentHeight) - height);
+
                     let bounceTo = function (callback) {
                         shape
                                 .transition()
-                                .delay(shape.attr('r') * 10)
-                                .attr('cy', callback);
+                                .delay(shape.attr(heightAttr) * 10)
+                                .attr(yAxisAttr, callback);
                     };
 
                     setInterval(function () {
 
                         if (!origY) {
-                            origY = shape.attr('cy');
+                            origY = shape.attr(yAxisAttr);
                         }
 
                         bounceTo(function () {
@@ -36,12 +59,8 @@ class Bounce {
                                 return origY;
                             });
                         }, 250);
+
                     }, 500);
-                })
-                .attr('cy', function (property) {
-                    let diameter = property.diameter;
-                    let radius = diameter / 2;
-                    return (parentHeight) - diameter;
                 })
                 ;
     }

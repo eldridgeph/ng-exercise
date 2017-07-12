@@ -115,6 +115,8 @@ export default class BasicController {
                 .enter()
                 .append("rect");
 
+        rectangles.call(d3Behavior.bounce);
+
         let rectangleAttributes = rectangles
                 .attr("x", get('rx'))
                 .attr("y", get('ry'))
