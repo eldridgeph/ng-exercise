@@ -36,12 +36,8 @@ export default class BasicController {
                     .append("circle")
                     .attr("cx", 50)
                     .attr("cy", 50)
-                    .attr("r", function (circleSetting) {
-                        return circleSetting.diameter;
-                    })
-                    .style("fill", function (circleSetting) {
-                        return circleSetting.color;
-                    })
+                    .attr("r", (circleSetting) => circleSetting.diameter)
+                    .style("fill", (circleSetting) => circleSetting.color)
                     .call(d3Behavior.draggable)
                     .call(d3Behavior.bounce);
         });
@@ -58,12 +54,8 @@ export default class BasicController {
         ];
 
         let lineFunction = d3.svg.line()
-                .x(function (d) {
-                    return d.x;
-                })
-                .y(function (d) {
-                    return d.y;
-                })
+                .x((d) => d.x)
+                .y((d) => d.y)
                 .interpolate("basis");
 
         d3.select("#line-interpolation")
@@ -92,9 +84,7 @@ export default class BasicController {
                 .attr("height", 200);
 
         let get = function (attr) {
-            return function (d) {
-                return d[attr];
-            };
+            return (d) => d[attr];
         };
 
         let circleGroup = svgContainer.append("g");
@@ -115,34 +105,42 @@ export default class BasicController {
                 .enter()
                 .append("rect");
 
-        rectangles.call(d3Behavior.bounce);
+        rectangles
+                .call(d3Behavior.draggable)
+                .call(d3Behavior.bounce);
 
         let rectangleAttributes = rectangles
                 .attr("x", get('rx'))
                 .attr("y", get('ry'))
                 .attr("height", get('height'))
                 .attr("width", get('width'))
-                .style("fill", get('color'));
+                .style("fill", get('color'))
+                .each(function (dimension, index) {
+                    let element = d3.select(this);
+                    setInterval(function () {
+                        let axisY = Math.round(element.attr('y'));
+                        let axisX = Math.round(element.attr('x'));
+                        let shapes = textShapes[0];
+                        let coords = `coords(${axisX},${axisY})`;
+                        d3.select(shapes[index]).text(coords);
+                    }, 100);
+                });
 
         let textGroup = svgContainer
                 .append('g').attr('transform', 'translate(100,0)');
 
-        let text = textGroup
+        let textShapes = textGroup
                 .selectAll('text')
                 .data(circleData)
                 .enter()
                 .append('text');
 
-        text
+        textShapes
                 .attr('x', get('cx'))
                 .attr('y', get('cy'))
                 .attr('fill', 'red')
                 .attr('font-size', '20px')
                 .attr('font-weight', 'bold')
-                .text(function (d) {
-                    return 'coord($x, $y)'
-                            .replace('$x', d.cx)
-                            .replace('$y', d.cy);
-                });
+                .text((d) => `coord(${d.cx}, ${d.cy})`);
     }
 }

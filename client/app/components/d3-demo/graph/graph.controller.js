@@ -44,32 +44,22 @@ export default class GraphController {
         let yAxisRight = d3.svg.axis().scale(y1).orient("right").ticks(5);
 
         let valueline = d3.svg.line()
-                .x(function (d) {
-                    return x(d.date);
-                })
-                .y(function (d) {
-                    return y0(d.close);
-                });
+                .x((d) => x(d.date))
+                .y((d) => y0(d.close));
 
         let valueline2 = d3.svg.line()
-                .x(function (d) {
-                    return x(d.date);
-                })
-                .y(function (d) {
-                    return y1(d.open);
-                });
+                .x((d) => x(d.date))
+                .y((d) => y1(d.open));
 
         let svg = d3.select("#d3-dual-axes")
                 .attr("width", '100%')
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
-                .attr("transform",
-                        "translate(" + margin.left + "," + margin.top + ")");
+                .attr("transform", `translate(${margin.left},${margin.top})`);
 
         let data = d3GraphData;
 
-        for (var index in data) {
-            var stat = data[index];
+        for (let stat of data) {
             if (typeof stat.date === 'string') {
                 stat.date = parseDate(stat.date);
             } else {
@@ -78,15 +68,9 @@ export default class GraphController {
         }
 
         // Scale the range of the data
-        x.domain(d3.extent(data, function (d) {
-            return d.date;
-        }));
-        y0.domain([0, d3.max(data, function (d) {
-                return Math.max(d.close);
-            })]);
-        y1.domain([0, d3.max(data, function (d) {
-                return Math.max(d.open);
-            })]);
+        x.domain(d3.extent(data, (d) => d.date));
+        y0.domain([0, d3.max(data, (d) => Math.max(d.close))]);
+        y1.domain([0, d3.max(data, (d) => Math.max(d.open))]);
 
         svg.append("path")        // Add the valueline path.
                 .attr("d", valueline(data));

@@ -27,13 +27,13 @@ class Bounce {
                 .transition()
                 .each(function () {
 
-                    let origY;
                     let isCircle = this.tagName === 'circle';
                     let yAxisAttr = isCircle ? 'cy' : 'y';
                     let heightAttr = isCircle ? 'r' : 'height';
 
                     let shape = d3.select(this);
                     let height = isCircle ? shape.attr('r') : shape.attr('height');
+                    let origY = parentHeight - height;
 
                     shape.attr(yAxisAttr, (parentHeight) - height);
 
@@ -51,13 +51,11 @@ class Bounce {
                         }
 
                         bounceTo(function () {
-                            return origY - 20;
+                            return origY - 40;
                         });
 
                         setTimeout(function () {
-                            bounceTo(function () {
-                                return origY;
-                            });
+                            bounceTo(() => origY);
                         }, 250);
 
                     }, 500);
