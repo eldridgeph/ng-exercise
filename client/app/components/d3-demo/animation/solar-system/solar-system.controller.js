@@ -9,57 +9,96 @@ export default class SolarSystemController {
     }
 
     $onInit() {
+        this.$timeout(this.initDraw.bind(this));
+    }
 
-        let self = this;
-        let svgHeight = 400;
+    initDraw() {
 
-        this.$timeout(function () {
-            self.svg = d3.select('#d3-solar-system');
-            self.svg
-                    .attr('height', svgHeight)
-                    .attr('width', 400);
+        const planetGap = 5;
+        let self = this,
+                previousPlanet = {},
+                sun,
+                svgHeight = 400,
+                planetData = [
+                    {key: 'mercury', color: 'gray', size: 5},
+                    {key: 'venus', color: 'orange', size: 8},
+                    {key: 'earth', color: 'blue', size: 10},
+                    {key: 'mars', color: 'red', size: 11},
+                    {key: 'jupiter', color: 'green', size: 30},
+                    {key: 'saturn', color: 'brown', size: 28},
+                    {key: 'uranus', color: 'skyblue', size: 15},
+                    {key: 'neptune', color: 'blue', size: 13},
+                    {key: 'pluto', color: 'milk', size: 3},
+                ];
 
-            let planetData = [
-                {key: 'mercury', color: 'gray', size: 5},
-                {key: 'venus', color: 'orange', size: 8},
-                {key: 'earth', color: 'blue', size: 10},
-                {key: 'mars', color: 'red', size: 11},
-                {key: 'jupiter', color: 'green', size: 30},
-                {key: 'saturn', color: 'brown', size: 28},
-                {key: 'uranus', color: 'skyblue', size: 15},
-                {key: 'neptune', color: 'blue', size: 13},
-                {key: 'pluto', color: 'milk', size: 3},
-            ];
+        self.svg = d3.select('#d3-solar-system');
+        self.svg
+                .attr('height', svgHeight)
+                .attr('width', 400);
 
-            let sun = self.createPlanet({
-                cx: svgHeight / 2,
-                cy: svgHeight / 2,
-                r: 10,
-                stroke: 'black',
-                fill: 'yellow'
-            });
+
+        sun = self.createPlanet({
+            cx: svgHeight / 2,
+            cy: svgHeight / 2,
+            r: 10,
+            stroke: 'black',
+            fill: 'yellow'
+        });
+
+        planetData.forEach(function (planetDataItem, index) {
 
             let newPlanet = {};
-            
-            planetData.forEach(function (planetDataItem) {
 
-                if (newPlanet.y) {
-                    newPlanet.y = newPlanet.selection.attr('cy') - (newPlanet.selection.attr('r') * 2 + 5)
-                } else {
-                    newPlanet.y = sun.attr('cy') - (sun.attr('r') * 2);
-                }
+            if (previousPlanet.y) {
+                newPlanet.y = previousPlanet.selection.attr('cy') - ((previousPlanet.selection.attr('r') * 1) + (planetDataItem.size / 2) + planetGap)
+            } else {
+                newPlanet.y = sun.attr('cy') - (sun.attr('r') * 2);
+            }
 
-                newPlanet.orbit = self.createOrbitTo({cy: newPlanet.y}, sun);
-                newPlanet.selection = self.createPlanet({
-                    cy: newPlanet.y,
-                    cx: sun.attr('cx'),
-                    r: planetDataItem.size / 1.6,
-                    fill: planetDataItem.color,
-                    stroke: 0
-                });
+            newPlanet.orbit = self.createOrbitTo({cy: newPlanet.y}, sun);
+            newPlanet.selection = self.createPlanet({
+                key: planetDataItem.key,
+                cy: newPlanet.y,
+                cx: sun.attr('cx'),
+                r: planetDataItem.size / 1.6, //ratio
+                fill: planetDataItem.color,
+                stroke: 0
             });
 
+            let angle = 1;
+
+            setInterval(function () {
+
+                let orbit = newPlanet.orbit;
+                let orbitX = (orbit.attr('cx') * 1) + (orbit.attr('r') * 1) * Math.cos(angle);
+                let orbitY = (orbit.attr('cy') * 1) + (orbit.attr('r') * 1) * Math.sin(angle);
+
+                (angle = angle += (300 / (index + 1)) / 1000) && angle >= 90 && (angle = 1);
+
+                let planetLabel = getPlanetText(newPlanet.selection);
+
+                planetLabel
+                        .transition()
+                        .attr('x', orbitX)
+                        .attr('y', orbitY + (newPlanet.selection.attr('r') * 1) + 10);
+
+                newPlanet
+                        .selection
+                        .transition()
+                        .attr('cx', orbitX)
+                        .attr('cy', orbitY);
+            }, 100);
+
+            previousPlanet = newPlanet;
+
         });
+
+        function getPlanetText(planet) {
+            let planetElement = planet.node();
+            let planetNg = angular.element(planetElement);
+            return d3.select(planetNg.parent()[0]).select('text');
+        }
+
     }
 
     createCircle(properties) {
@@ -73,19 +112,35 @@ export default class SolarSystemController {
     }
 
     createPlanet(properties = {}) {
-        return this
+
+        let planet = this
                 .createCircle(properties)
                 .call(D3Draggable);
+
+        let planetElement = planet[0][0];
+        let planetNg = angular.element(planetElement);
+        let planetGroup = planetNg.parent();
+
+        d3.select(planetGroup[0])
+                .append('text')
+                .attr('x', 100)
+                .attr('y', 100)
+                .attr('font-size', 10)
+                .attr('fill', 'black')
+                .text(properties.key || '');
+
+        return planet;
     }
 
     createOrbitTo(planet, sun) {
         return this
                 .createCircle({
                     'stroke-width': 1,
+                    'stroke-dasharray': "10,5",
                     fill: 'transparent',
                     r: sun.attr('cy') - planet.cy,
                     cy: sun.attr('cy'),
-                    cx: sun.attr('cx')
+                    cx: sun.attr('cx'),
                 });
     }
 }
