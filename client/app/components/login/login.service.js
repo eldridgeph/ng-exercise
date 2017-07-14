@@ -3,6 +3,9 @@ export default $log => {
         isAuthenticated: false,
         setLogin: function (value = false) {
             this.isAuthenticated = value;
+        },
+        isLoggedIn() {
+            return !!this.isAuthenticated;
         }
     };
 };
