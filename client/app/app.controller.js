@@ -1,19 +1,17 @@
-import LoginService from './components/login/login.service';
-
 export default class AppController {
-    constructor() {
-
+    constructor(loginService) {
+        this.loginService = loginService;
     }
     $onInit($timeout) {
-            this.login();
+        this.login();
     }
     isLoggedIn() {
-        return !!LoginService.isAuthenticated;
+        return !!this.loginService.isAuthenticated;
     }
     login() {
-        LoginService.isAuthenticated = true;
+        this.loginService.isAuthenticated = true;
     }
     logout() {
-        LoginService.isAuthenticated = false;
+        this.loginService.isAuthenticated = false;
     }
 }

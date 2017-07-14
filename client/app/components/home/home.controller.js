@@ -1,5 +1,4 @@
 import angular from 'angular';
-import LoginService from '../../components/login/login.service';
 
 import * as d3 from 'd3';
 
@@ -8,14 +7,15 @@ import './home.css';
 
 export default class HomeController {
 
-    constructor($log, $interval, $timeout, $scope) {
+    constructor($log, $interval, $timeout, $scope, loginService) {
         this.$scope = $scope;
         this.$interval = $interval;
         this.$timeout = $timeout;
         this.$log = $log;
+        this.loginService = loginService;
     }
     logout() {
-        LoginService.isAuthenticated = false;
+        this.loginService.isAuthenticated = false;
     }
     animationTabOpened() {
         this.$scope.$broadcast('tab.animation.opened', {});

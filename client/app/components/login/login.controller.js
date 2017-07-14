@@ -1,13 +1,9 @@
-import LoginService from './login.service';
-
 class LoginController {
-    constructor() {
-        this.isAuthenticated = false;
+    constructor(loginService) {
+        this.loginService = loginService;
     }
     setLogin(value) {
-        this.isAuthenticated = typeof value === 'undefined' ? false : value;
-        LoginService.isAuthenticated = this.isAuthenticated;
-        console.log('isAuthenticated', this.isAuthenticated);
+        this.loginService.isAuthenticated = value;
     }
 }
 

@@ -9,7 +9,7 @@ module.exports = {
     },
     output: {
         path: __dirname,
-        filename: './dist/[name].bundle.js'
+        filename: './client/dist/[name].bundle.js'
     },
     module: {
         loaders: [
@@ -33,6 +33,7 @@ module.exports = {
             "d3": "d3"
         }),
         new webpack.IgnorePlugin(/^(jsdom|fs|child_process|cookie|xmlhttprequest|navigator)$/),
-        new OpenBrowserPlugin({url: 'http://localhost:3333'})
+        new OpenBrowserPlugin({url: 'http://localhost:3333'}),
+        new webpack.HotModuleReplacementPlugin(),
     ]
 };

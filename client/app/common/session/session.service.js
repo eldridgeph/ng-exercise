@@ -1,8 +1,9 @@
-export default class SessionService {
-    constructor() {
-        this.setLanguage('en');
-    }
-    setLanguage(value) {
-        this.language = value || 'en';
-    }
-}
+export default function () {
+    return {
+        language: 'en',
+        setLanguage: function (value = 'en') {
+            this.language = value;
+        }
+    };
+};
+   

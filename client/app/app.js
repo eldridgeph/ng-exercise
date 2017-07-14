@@ -9,6 +9,9 @@ import Common from './common/common';
 import Components from './components/components';
 import AppComponent from './app.component';
 
+import loginService from './components/login/login.service';
+import sessionService from './common/session/session.service';
+
 angular
         .module('food-app', [
             ngTranslate,
@@ -16,4 +19,6 @@ angular
             Common,
             Components
         ])
+        .factory('loginService', loginService)
+        .factory('sessionService', sessionService)
         .component('appView', AppComponent);
