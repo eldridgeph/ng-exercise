@@ -65,11 +65,6 @@ class Axis extends Core {
     }
 }
 
-/**
- * Axis class auto calculate which scaling technique in D3 we will be using
- * e.g. Quantitative scaling, Time scaling or Linear Scaling
- * @todo on progress
- */
 export default function () {
     return function () {
         return new Axis;

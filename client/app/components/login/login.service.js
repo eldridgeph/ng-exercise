@@ -1,7 +1,7 @@
 export default $log => {
     return {
         isAuthenticated: false,
-        setLogin: value => {
+        setLogin: function (value = false) {
             this.isAuthenticated = value;
         }
     };

@@ -14,9 +14,6 @@ export default class HomeController {
         this.$log = $log;
         this.loginService = loginService;
     }
-    logout() {
-        this.loginService.isAuthenticated = false;
-    }
     animationTabOpened() {
         this.$scope.$broadcast('tab.animation.opened', {});
     }
