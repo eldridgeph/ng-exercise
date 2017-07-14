@@ -1,6 +1,10 @@
 {
-    "LOGOUT":"Logout",
-    "BASIC": "Basic",
-    "GRAPH": "Graph",
-    "ANIMATION": "Animation"
+    "TITLE": "Arcanys team lunch",
+    "LOGIN": "Log in",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "PLS_ENTER_USERNAME": "Please enter username",
+    "PLS_ENTER_PASSWORD": "Please enter password",
+    "REMEMBER_ME": "Remember me",
+    "EXAMPLE_EMAIL_ADDRESS": "example@email.com"
 }

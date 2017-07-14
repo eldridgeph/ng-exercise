@@ -1,7 +1,7 @@
 import angular from 'angular';
 import template from './home.html';
 import controller from './home.controller';
-import translation from './home-translation.config';
+import {translation} from './home.config';
 
 import angularUiBootstrapTabs from 'angular-ui-bootstrap/src/tabs';
 import D3DemoComponents from '../d3-demo/d3-demo.component';

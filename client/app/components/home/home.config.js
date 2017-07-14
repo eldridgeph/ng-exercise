@@ -1,13 +1,14 @@
 import languages from 'dir-loader!./languages/config.js';
 import angular from 'angular';
 
-export default function ($translateProvider) {
-
+function translation($translateProvider) {
+    let langCode;
     angular.forEach(languages, function (language, file) {
-        let langCode = file.replace(/\.json/, '');
+        langCode = file.replace(/\.json/, '');
         $translateProvider.translations(langCode, language.src);
     });
-
     $translateProvider.preferredLanguage('en');
     $translateProvider.useSanitizeValueStrategy('escapeParameters');
 }
+
+export {translation};

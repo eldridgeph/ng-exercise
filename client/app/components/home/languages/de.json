@@ -1,6 +1,10 @@
 { 
-    "LOGOUT": "Ausloggen",
-    "BASIC": "Grundlegende ",
-    "GRAPH": "Graph",
-    "ANIMATION": "Animation" 
+    "TITLE": "Arcanys Team Mittagessen",
+    "LOGIN": "Einloggen Einloggen",
+    "EMAIL": "Email",
+    "PASSWORD": "Passwort",
+    "PLS_ENTER_USERNAME": "Bitte Benutzernamen eingeben",
+    "PLS_ENTER_PASSWORD": "Bitte Passwort eingeben",
+    "REMEMBER_ME": "Erinnere dich an mich",
+    "EXAMPLE_EMAIL_ADDRESS": "example@email.com"
 }
