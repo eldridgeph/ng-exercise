@@ -1,10 +1,11 @@
 import * as d3 from 'd3';
-import {draggable as D3Draggable} from '../../../../common/d3/behavior/behavior';
 import angular from 'angular';
 
 export default class SolarSystemController {
 
-    constructor($timeout) {
+    constructor($timeout, d3Service) {
+        this.d3 = d3Service;
+        this.d3Behavior = this.d3.d3Behavior;
         this.$timeout = $timeout;
     }
 
@@ -115,7 +116,7 @@ export default class SolarSystemController {
 
         let planet = this
                 .createCircle(properties)
-                .call(D3Draggable);
+                .call(this.d3Behavior.draggable);
 
         let planetElement = planet[0][0];
         let planetNg = angular.element(planetElement);

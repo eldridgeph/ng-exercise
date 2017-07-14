@@ -12,6 +12,8 @@ import AppComponent from './app.component';
 import loginService from './components/login/login.service';
 import sessionService from './common/session/session.service';
 
+import d3Service from './common/d3/d3.service';
+
 angular
         .module('food-app', [
             ngTranslate,
@@ -21,4 +23,5 @@ angular
         ])
         .factory('loginService', loginService)
         .factory('sessionService', sessionService)
+        .factory('d3Service', d3Service)
         .component('appView', AppComponent);

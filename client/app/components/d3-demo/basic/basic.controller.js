@@ -2,12 +2,13 @@ import * as d3 from 'd3';
 import {event as d3Event} from 'd3';
 import angular from 'angular';
 import d3LogoUrl from './assets/d3-logo.svg';
-import * as d3Behavior from '../../../common/d3/behavior/behavior';
 
 export default class BasicController {
-    constructor($timeout) {
+    constructor($timeout, d3Service) {
         this.$timeout = $timeout;
         this.d3LogoUrl = d3LogoUrl;
+        this.d3Service = d3Service;
+        this.d3Behavior = this.d3Service.d3Behavior;
     }
     $onInit() {
         let self = this;
@@ -38,9 +39,9 @@ export default class BasicController {
                     .attr("cy", 50)
                     .attr("r", (circleSetting) => circleSetting.diameter)
                     .style("fill", (circleSetting) => circleSetting.color)
-                    .call(d3Behavior.draggable)
-                    .call(d3Behavior.bounce);
-        });
+                    .call(this.d3Behavior.draggable)
+                    .call(this.d3Behavior.bounce);
+        }.bind(this));
     }
     initLineInterpolation() {
 
@@ -106,8 +107,8 @@ export default class BasicController {
                 .append("rect");
 
         rectangles
-                .call(d3Behavior.draggable)
-                .call(d3Behavior.bounce);
+                .call(this.d3Behavior.draggable)
+                .call(this.d3Behavior.bounce);
 
         let rectangleAttributes = rectangles
                 .attr("x", get('rx'))
