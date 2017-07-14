@@ -27,10 +27,7 @@ export default class Dimension extends Util {
         return this;
     }
 
-    static setTransform(value) {
-
-        let yValue = value[1];
-        let xValue = value[0];
+    static setTransform([xValue = 0, yValue = 0]) {
 
         let yPattern = /\,[\-\.0-9]{1,}\)/;
         let xPattern = /\([\-\.0-9]{1,}\,/;
@@ -38,8 +35,6 @@ export default class Dimension extends Util {
 
         let oldTransform = this.selection.attr('transform') || `translate(${d3Event.x},${d3Event.y})`;
         let newTransform;
-
-        console.log({svgDimension});
 
         if (yValue) {
             newTransform = oldTransform.replace(yPattern, ',' + (yValue - svgDimension.top) + ')');

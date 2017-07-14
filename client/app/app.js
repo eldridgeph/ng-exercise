@@ -12,16 +12,16 @@ import AppComponent from './app.component';
 import loginService from './components/login/login.service';
 import sessionService from './common/session/session.service';
 
-import d3Service from './common/d3/d3.service';
+import D3Module from './common/d3/d3';
 
 angular
         .module('food-app', [
             ngTranslate,
             ngSanitize,
             Common,
-            Components
+            Components,
+            D3Module
         ])
-        .factory('loginService', loginService)
-        .factory('sessionService', sessionService)
-        .factory('d3Service', d3Service)
+        .service('loginService', loginService)
+        .service('sessionService', sessionService)
         .component('appView', AppComponent);

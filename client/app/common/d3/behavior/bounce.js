@@ -37,12 +37,10 @@ class Bounce {
 
                     shape.attr(yAxisAttr, (parentHeight) - height);
 
-                    let bounceTo = function (callback) {
-                        shape
+                    let bounceTo = (callback) => shape
                                 .transition()
                                 .delay(shape.attr(heightAttr) * 10)
                                 .attr(yAxisAttr, callback);
-                    };
 
                     setInterval(function () {
 
@@ -50,13 +48,8 @@ class Bounce {
                             origY = shape.attr(yAxisAttr);
                         }
 
-                        bounceTo(function () {
-                            return origY - 40;
-                        });
-
-                        setTimeout(function () {
-                            bounceTo(() => origY);
-                        }, 250);
+                        bounceTo(() => origY - 40);
+                        setTimeout(() => bounceTo(() => origY), 250);
 
                     }, 500);
                 })

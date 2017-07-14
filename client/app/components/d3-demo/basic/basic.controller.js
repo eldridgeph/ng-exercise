@@ -4,11 +4,10 @@ import angular from 'angular';
 import d3LogoUrl from './assets/d3-logo.svg';
 
 export default class BasicController {
-    constructor($timeout, d3Service) {
+    constructor($timeout, d3Behavior) {
         this.$timeout = $timeout;
         this.d3LogoUrl = d3LogoUrl;
-        this.d3Service = d3Service;
-        this.d3Behavior = this.d3Service.d3Behavior;
+        this.d3Behavior = d3Behavior;
     }
     $onInit() {
         let self = this;

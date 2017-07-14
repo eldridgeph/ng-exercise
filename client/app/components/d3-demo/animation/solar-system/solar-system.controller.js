@@ -3,9 +3,8 @@ import angular from 'angular';
 
 export default class SolarSystemController {
 
-    constructor($timeout, d3Service) {
-        this.d3 = d3Service;
-        this.d3Behavior = this.d3.d3Behavior;
+    constructor($timeout, d3Behavior) {
+        this.d3Behavior = d3Behavior;
         this.$timeout = $timeout;
     }
 

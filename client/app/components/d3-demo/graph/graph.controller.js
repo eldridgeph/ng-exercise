@@ -2,32 +2,32 @@ import * as d3 from 'd3';
 import d3GraphData from './graph.data.csv';
 
 export default class GraphController {
-    constructor($timeout, $element) {
+    constructor($timeout, $element, d3Graph, d3Axis) {
+        this.d3Axis = d3Axis;
+        this.d3Graph = d3Graph;
         this.$element = $element;
         this.$timeout = $timeout;
     }
     $onInit() {
-        let self = this;
-
-        self.$timeout(function () {
-            self.initGraphScale();
-            self.initDualAxesGraph();
-        });
+        this.$timeout(this.draw.bind(this));
     }
+
+    draw() {
+        this.initGraphScale();
+        this.initDualAxesGraph();
+    }
+
     initGraphScale() {
-        let svgContainer = d3.select("#d3-axes")
-                .attr("width", '100%')
-                .attr("height", 100);
 
-        let axisScale = d3.scale.linear()
-                .domain([0, 100])
-                .range([0, 400]);
+        new this.d3Graph()
+                .setContainer('#d3-axes')
+                .add(
+                        new this.d3Axis()
+                        .setDomain(0, 100)
+                        .setRange(0, 350)
+                        .createBottom())
+                .implement()
 
-        let xAxis = d3.svg.axis()
-                .scale(axisScale);
-
-        svgContainer.append("g")
-                .call(xAxis);
     }
     initDualAxesGraph() {
 
