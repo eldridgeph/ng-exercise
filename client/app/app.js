@@ -3,7 +3,8 @@ import ngTranslate from 'angular-translate';
 import ngSanitize from 'angular-sanitize';
 
 import './app.css';
-import 'bootstrap-loader';
+import 'bootstrap/dist/css/bootstrap.min.css';
+//import * as bootstrapSass from 'bootstrap-sass';
 
 import Common from './common/common';
 import Components from './components/components';

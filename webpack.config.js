@@ -32,7 +32,7 @@ module.exports = {
             "window.jQuery": "jQuery",
             "d3": "d3"
         }),
-        new webpack.IgnorePlugin(/^(jsdom|fs|child_process|cookie|xmlhttprequest|navigator)$/),
+//        new webpack.IgnorePlugin(/^(jsdom|fs|child_process|cookie|xmlhttprequest|navigator)$/),
         new OpenBrowserPlugin({url: 'http://localhost:3333'}),
         new webpack.HotModuleReplacementPlugin(),
     ]
