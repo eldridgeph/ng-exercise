@@ -6,7 +6,7 @@ import './app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import CommonModule from './common/common';
-import Components from './components/components';
+import ComponentModule from './components/components';
 import {AppComponent} from './app.component';
 
 import D3Module from './common/d3/d3';
@@ -16,7 +16,7 @@ angular
             ngTranslate,
             ngSanitize,
             CommonModule,
-            Components,
+            ComponentModule,
             D3Module
         ])
         .component('appView', AppComponent);

@@ -1,8 +1,10 @@
 import angular from 'angular';
-import UiPanelModule from './panel/panel.component';
+import UiPanelModule from './panel/panel.module';
 
-export default angular
+const UiModule = angular
         .module('common.ui', [
             UiPanelModule
         ])
         .name;
+
+export default UiModule;

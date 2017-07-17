@@ -1,19 +1,25 @@
 import angular from 'angular';
 import template from './home.html';
-import controller from './home.controller';
+import './home.css';
 
 import angularUiBootstrapTabs from 'angular-ui-bootstrap/src/tabs';
 import D3DemoComponents from '../d3-demo/d3-demo.component';
 
-let component = {
-    template, controller
-};
+export const HomeComponent = {
+    template,
+    controller: class HomeComponent {
+        constructor($log, $interval, $timeout, $scope, loginService) {
+            this.$scope = $scope;
+            this.$interval = $interval;
+            this.$timeout = $timeout;
+            this.$log = $log;
+            this.loginService = loginService;
+        }
+        animationTabOpened() {
+            this.$scope.$broadcast('tab.animation.opened', {});
+        }
+        $onInit() {
+        }
 
-export default angular
-        .module('home', [
-            angularUiBootstrapTabs,
-            D3DemoComponents
-        ])
-        .config(($arcTranslateProvider) => new $arcTranslateProvider(require('dir-loader!./languages/config.js')))
-        .component('homeView', component)
-        .name;
+    }
+};

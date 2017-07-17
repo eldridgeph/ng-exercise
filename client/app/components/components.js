@@ -1,8 +1,11 @@
 import angular from 'angular';
-import HomeComponent from './home/home.component';
-import LoginComponent from './login/login.component';
+import HomeModule from './home/home.module';
+import LoginModule from './login/login.module';
 
-export default angular.module('app.components', [
-    HomeComponent,
-    LoginComponent
-]).name;
+const ComponentsModule = angular
+        .module('app.components', [
+            HomeModule,
+            LoginModule
+        ]).name;
+
+export default ComponentsModule;
