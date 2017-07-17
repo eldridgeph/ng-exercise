@@ -2,11 +2,13 @@ import angular from 'angular';
 import template from './login.html';
 import controller from './login.controller';
 import {translation} from './login.config.js';
+import loginService from './login.service';
 
 let component = {template, controller};
 
 export default angular
         .module('login', [])
         .config(translation)
+        .service('loginService', loginService)
         .component('loginView', component)
         .name;

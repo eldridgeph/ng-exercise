@@ -9,9 +9,6 @@ import Common from './common/common';
 import Components from './components/components';
 import AppComponent from './app.component';
 
-import loginService from './components/login/login.service';
-import sessionService from './common/session/session.service';
-
 import D3Module from './common/d3/d3';
 
 angular
@@ -21,7 +18,5 @@ angular
             Common,
             Components,
             D3Module
-        ])
-        .service('loginService', loginService)
-        .service('sessionService', sessionService)
+        ]) 
         .component('appView', AppComponent);
