@@ -1,6 +1,7 @@
 node_modules
 nbproject
 dist
+client
 /*.ttf
 /*.eot
 /*.svg
