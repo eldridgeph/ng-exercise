@@ -1,7 +1,6 @@
 import angular from 'angular';
 import template from './home.html';
 import controller from './home.controller';
-import {translation} from './home.config';
 
 import angularUiBootstrapTabs from 'angular-ui-bootstrap/src/tabs';
 import D3DemoComponents from '../d3-demo/d3-demo.component';
@@ -15,6 +14,6 @@ export default angular
             angularUiBootstrapTabs,
             D3DemoComponents
         ])
+        .config(($languageProvider) => $languageProvider.load(require('dir-loader!./languages/config.js')))
         .component('homeView', component)
-        .config(translation)
         .name;

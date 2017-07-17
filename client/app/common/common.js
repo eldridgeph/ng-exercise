@@ -1,12 +1,12 @@
 import angular from 'angular';
 import LanguageComponent from './language/language.component';
 import UiComponent from './ui/ui.component';
-import sessionService from './session/session.service';
+import SessionComponent from './session/session.component';
 
 export default angular
         .module('common', [
             LanguageComponent,
-            UiComponent
+            UiComponent,
+            SessionComponent
         ])
-        .service('sessionService', sessionService)
         .name;
