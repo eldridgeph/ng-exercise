@@ -2,9 +2,6 @@ import angular from 'angular';
 import template from './home.html';
 import './home.css';
 
-import angularUiBootstrapTabs from 'angular-ui-bootstrap/src/tabs';
-import D3DemoComponents from '../d3-demo/d3-demo.component';
-
 export const HomeComponent = {
     template,
     controller: class HomeComponent {
