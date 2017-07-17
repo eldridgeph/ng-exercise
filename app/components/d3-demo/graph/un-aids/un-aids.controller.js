@@ -8,7 +8,9 @@ export default class UnAidsController {
         this.d3Axis = d3Axis;
     }
     $onInit() {
-        this.$timeout(this.draw.bind(this));
+        this.$timeout(() => {
+            this.draw();
+        });
     }
     draw() {
 

@@ -22,7 +22,7 @@ export const BasicComponent = {
             });
         }
         initShapes() {
-            this.$timeout(function () {
+            this.$timeout(() => {
 
                 let svgContainer = d3.select("#d3-init")
                         .attr("width", "100%")
@@ -44,7 +44,7 @@ export const BasicComponent = {
                         .style("fill", (circleSetting) => circleSetting.color)
                         .call(this.d3Behavior.draggable)
                         .call(this.d3Behavior.bounce);
-            }.bind(this));
+            });
         }
         initLineInterpolation() {
 

@@ -12,7 +12,9 @@ export const SolarSystemComponent = {
         }
 
         $onInit() {
-            this.$timeout(this.initDraw.bind(this));
+            this.$timeout(() => {
+                this.initDraw();
+            });
         }
 
         initDraw() {

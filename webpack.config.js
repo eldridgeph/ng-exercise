@@ -5,7 +5,7 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        app: './client/app/app.module.js'
+        app: './app/app.module.js'
     },
     output: {
         path: __dirname,

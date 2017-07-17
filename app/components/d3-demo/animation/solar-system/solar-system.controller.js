@@ -9,7 +9,9 @@ export default class SolarSystemController {
     }
 
     $onInit() {
-        this.$timeout(this.initDraw.bind(this));
+        this.$timeout(() => {
+            this.initDraw();
+        });
     }
 
     initDraw() {

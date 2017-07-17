@@ -9,7 +9,9 @@ export default class GraphController {
         this.$timeout = $timeout;
     }
     $onInit() {
-        this.$timeout(this.draw.bind(this));
+        this.$timeout(() => {
+            this.draw();
+        });
     }
 
     draw() {

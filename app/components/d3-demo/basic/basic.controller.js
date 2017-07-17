@@ -10,37 +10,33 @@ export default class BasicController {
         this.d3Behavior = d3Behavior;
     }
     $onInit() {
-        let self = this;
-        self.$timeout(function () {
-            self.initShapes();
-            self.initLineInterpolation();
-            self.initObjectGroup();
-        })
+        this.$timeout(() => {
+            this.initShapes();
+            this.initLineInterpolation();
+            this.initObjectGroup();
+        });
     }
     initShapes() {
-        this.$timeout(function () {
+        let svgContainer = d3.select("#d3-init")
+                .attr("width", "100%")
+                .attr("height", 100)
 
-            let svgContainer = d3.select("#d3-init")
-                    .attr("width", "100%")
-                    .attr("height", 100)
+        let circleSettings = [
+            {diameter: 40, color: 'green'},
+            {diameter: 30, color: 'blue'},
+            {diameter: 20, color: 'purple'},
+        ]
 
-            let circleSettings = [
-                {diameter: 40, color: 'green'},
-                {diameter: 30, color: 'blue'},
-                {diameter: 20, color: 'purple'},
-            ]
-
-            svgContainer.selectAll("circle")
-                    .data(circleSettings)
-                    .enter()
-                    .append("circle")
-                    .attr("cx", 50)
-                    .attr("cy", 50)
-                    .attr("r", (circleSetting) => circleSetting.diameter)
-                    .style("fill", (circleSetting) => circleSetting.color)
-                    .call(this.d3Behavior.draggable)
-                    .call(this.d3Behavior.bounce);
-        }.bind(this));
+        svgContainer.selectAll("circle")
+                .data(circleSettings)
+                .enter()
+                .append("circle")
+                .attr("cx", 50)
+                .attr("cy", 50)
+                .attr("r", (circleSetting) => circleSetting.diameter)
+                .style("fill", (circleSetting) => circleSetting.color)
+                .call(this.d3Behavior.draggable)
+                .call(this.d3Behavior.bounce);
     }
     initLineInterpolation() {
 

@@ -7,7 +7,9 @@ export default class RandomBubblesController {
         this.$interval = $interval;
     }
     $onInit() {
-        this.$timeout(this.draw.bind(this));
+        this.$timeout(() => {
+            this.draw();
+        });
     }
     draw() {
 
