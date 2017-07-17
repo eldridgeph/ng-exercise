@@ -1,11 +1,11 @@
+let path = require('path');
 let webpack = require('webpack');
 let OpenBrowserPlugin = require('open-browser-webpack-plugin');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+const WebpackConfig = {
     entry: {
-        app: './src/app/app.module.js',
-        vendor: ['jquery', 'angular', 'angular-ui-bootstrap', 'bootstrap']
+        app: './src/app/app.module.js'
     },
     output: {
         path: __dirname + '/client/',
@@ -40,10 +40,13 @@ module.exports = {
 
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            filename: 'vendor.bundle.js'
+            minChunks: function (module, count) {
+                return module.resource && module.resource.indexOf(path.resolve(__dirname, 'src')) === -1;
+            }
         }),
-
         new webpack.HotModuleReplacementPlugin(),
         new OpenBrowserPlugin({url: 'http://localhost:3333'}),
     ]
 };
+
+module.exports = WebpackConfig;
