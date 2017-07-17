@@ -14,6 +14,6 @@ export default angular
             angularUiBootstrapTabs,
             D3DemoComponents
         ])
-        .config(($languageProvider) => $languageProvider.load(require('dir-loader!./languages/config.js')))
+        .config(($arcTranslateProvider) => new $arcTranslateProvider(require('dir-loader!./languages/config.js')))
         .component('homeView', component)
         .name;

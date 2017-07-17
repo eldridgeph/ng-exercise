@@ -1,26 +1,30 @@
 import angular from 'angular';
 
 export default function ($translateProvider) {
-    return new class LanguageProvider {
-        constructor() {
-            this.setPreferred('en');
-            $translateProvider.useSanitizeValueStrategy('escapeParameters');
+    return class ArcLoadTranslation {
+        constructor(config) {
+            ArcLoadTranslation.load(config);
+            ArcLoadTranslation.setPreferred('en');
         }
-        setPreferred(langCode = 'en') {
+        static getDefaultLangCode() {
+            return 'en';
+        }
+        static setPreferred(langCode = this.getDefaultLangCode()) {
             this.preferredLangCode = langCode;
             $translateProvider.preferredLanguage(this.preferredLangCode);
+            $translateProvider.useSanitizeValueStrategy('escapeParameters');
             return this;
         }
-        set(preferredLanguage = 'en', translations) {
+        static set(preferredLanguage = this.getDefaultLangCode(), translations) {
             this.setPreferred(preferredLanguage);
             angular.forEach(translations, (language, filename) => $translateProvider.translations(filename.replace(/\.json/, ''), language.src));
             return this;
         }
-        load(translations) {
+        static load(translations) {
             this.set(this.preferredLangCode, translations);
             return this;
         }
-        $get() {
+        static $get() {
 
         }
     }

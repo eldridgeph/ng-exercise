@@ -9,7 +9,7 @@ let component = {template, controller};
 export default angular
         .module('login', [
         ])
-        .config(($languageProvider) => $languageProvider.load(require('dir-loader!./languages/config.js')))
+        .config(($arcTranslateProvider) => new $arcTranslateProvider(require('dir-loader!./languages/config.js')))
         .service('loginService', loginService)
         .component('loginView', component)
         .name;

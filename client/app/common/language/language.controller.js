@@ -23,7 +23,6 @@ export default class LanguageController {
         if (!this.language) {
             this.language = 'en';
         }
-
         return this.language;
     }
 }

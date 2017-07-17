@@ -8,7 +8,7 @@ let component = {template, controller};
 export default angular
         .module('language', [
         ])
-        .provider('$language', provider)
-        .config(($languageProvider) => $languageProvider.load(require('dir-loader!./languages/config.js')))
+        .provider('$arcTranslate', provider)
+        .config(($arcTranslateProvider) => new $arcTranslateProvider(require('dir-loader!./languages/config.js')))
         .component('languageSelect', component)
         .name;
