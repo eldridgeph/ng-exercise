@@ -4,11 +4,10 @@ import ngSanitize from 'angular-sanitize';
 
 import './app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-//import * as bootstrapSass from 'bootstrap-sass';
 
-import Common from './common/common';
+import CommonModule from './common/common';
 import Components from './components/components';
-import AppComponent from './app.component';
+import {AppComponent} from './app.component';
 
 import D3Module from './common/d3/d3';
 
@@ -16,8 +15,8 @@ angular
         .module('food-app', [
             ngTranslate,
             ngSanitize,
-            Common,
+            CommonModule,
             Components,
             D3Module
-        ]) 
+        ])
         .component('appView', AppComponent);

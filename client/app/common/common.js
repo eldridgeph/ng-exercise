@@ -1,12 +1,14 @@
 import angular from 'angular';
-import LanguageComponent from './language/language.component';
-import UiComponent from './ui/ui.component';
-import SessionComponent from './session/session.component';
+import LanguageModule from './language/language.module';
+import UiModule from './ui/ui.component';
+import SessionModule from './session/session.module';
 
-export default angular
-        .module('common', [
-            LanguageComponent,
-            UiComponent,
-            SessionComponent
+const CommonModule = angular
+        .module('app.common', [
+            LanguageModule,
+            UiModule,
+            SessionModule
         ])
         .name;
+
+export default CommonModule;

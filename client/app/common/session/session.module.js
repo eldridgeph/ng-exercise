@@ -1,7 +1,9 @@
 import angular from 'angular';
 import service from './session.service';
 
-export default angular
-        .module('session', [])
+const SessionModule = angular
+        .module('common.session', [])
         .service('sessionService', service)
         .name;
+
+export default SessionModule;
