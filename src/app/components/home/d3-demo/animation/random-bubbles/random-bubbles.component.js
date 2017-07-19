@@ -5,10 +5,11 @@ import * as d3 from 'd3';
 export const RandomBubblesComponent = {
     template,
     controller: class RandomBubblesController {
-        constructor($interval, $timeout, d3Behavior) {
-            this.d3Behavior = d3Behavior;
+        constructor($interval, $timeout, d3Behaviors, d3DraggableBehavior) {
+            this.d3Behaviors = d3Behaviors;
             this.$timeout = $timeout;
             this.$interval = $interval;
+            this.d3DraggableBehavior = d3DraggableBehavior;
         }
         $onInit() {
             this.$timeout(() => {
@@ -17,7 +18,6 @@ export const RandomBubblesComponent = {
         }
         draw() {
 
-            let self = this;
             let data = {
                 children: [
                     {"country": "Taiwan", "value": 23000000},
@@ -49,10 +49,10 @@ export const RandomBubblesComponent = {
                     .attr('width', '100%')
                     .attr('height', 400);
 
-            nodes.forEach(function (node) {
+            nodes.forEach((node) => {
 
                 let nodeGroup = svg.append('g')
-                        .call(self.d3Behavior.draggable)
+                        .call(this.d3DraggableBehavior)
                         ;
 
                 nodeGroup
@@ -63,8 +63,8 @@ export const RandomBubblesComponent = {
                             r: node.r,
                             fill: color(node.country)
                         });
-
                 nodeGroup
+
                         .append('text')
                         .attr({
                             x: node.x,
@@ -78,7 +78,7 @@ export const RandomBubblesComponent = {
                     return Math.round(Math.random() * max);
                 }
 
-                self.$interval(function () {
+                this.$interval(() => {
                     let randomX = getRandom();
                     let randomY = getRandom();
                     nodeGroup

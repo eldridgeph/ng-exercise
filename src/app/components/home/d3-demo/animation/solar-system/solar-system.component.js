@@ -6,9 +6,11 @@ export const SolarSystemComponent = {
     template,
     controller: class SolarSystemController {
 
-        constructor($timeout, d3Behavior) {
-            this.d3Behavior = d3Behavior;
+        constructor($timeout, $interval, d3Behaviors, d3DraggableBehavior) {
+            this.d3Behaviors = d3Behaviors;
             this.$timeout = $timeout;
+            this.$interval = $interval;
+            this.d3DraggableBehavior = d3DraggableBehavior;
         }
 
         $onInit() {
@@ -20,8 +22,7 @@ export const SolarSystemComponent = {
         initDraw() {
 
             const planetGap = 5;
-            let self = this,
-                    previousPlanet = {},
+            let previousPlanet = {},
                     sun,
                     svgHeight = 400,
                     planetData = [
@@ -36,13 +37,13 @@ export const SolarSystemComponent = {
                         {key: 'pluto', color: 'milk', size: 3},
                     ];
 
-            self.svg = d3.select('#d3-solar-system');
-            self.svg
+            this.svg = d3.select('#d3-solar-system');
+            this.svg
                     .attr('height', svgHeight)
                     .attr('width', 400);
 
 
-            sun = self.createPlanet({
+            sun = this.createPlanet({
                 cx: svgHeight / 2,
                 cy: svgHeight / 2,
                 r: 10,
@@ -50,7 +51,7 @@ export const SolarSystemComponent = {
                 fill: 'yellow'
             });
 
-            planetData.forEach(function (planetDataItem, index) {
+            planetData.forEach((planetDataItem, index) => {
 
                 let newPlanet = {};
 
@@ -60,8 +61,8 @@ export const SolarSystemComponent = {
                     newPlanet.y = sun.attr('cy') - (sun.attr('r') * 2);
                 }
 
-                newPlanet.orbit = self.createOrbitTo({cy: newPlanet.y}, sun);
-                newPlanet.selection = self.createPlanet({
+                newPlanet.orbit = this.createOrbitTo({cy: newPlanet.y}, sun);
+                newPlanet.selection = this.createPlanet({
                     key: planetDataItem.key,
                     cy: newPlanet.y,
                     cx: sun.attr('cx'),
@@ -72,7 +73,7 @@ export const SolarSystemComponent = {
 
                 let angle = 1;
 
-                setInterval(function () {
+                this.$interval(() => {
 
                     let orbit = newPlanet.orbit;
                     let orbitX = (orbit.attr('cx') * 1) + (orbit.attr('r') * 1) * Math.cos(angle);
@@ -120,7 +121,7 @@ export const SolarSystemComponent = {
 
             let planet = this
                     .createCircle(properties)
-                    .call(this.d3Behavior.draggable);
+                    .call(this.d3DraggableBehavior);
 
             let planetElement = planet[0][0];
             let planetNg = angular.element(planetElement);

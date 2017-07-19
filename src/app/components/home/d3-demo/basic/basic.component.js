@@ -3,22 +3,22 @@ import template from './basic.html';
 
 import * as d3 from 'd3';
 import {event as d3Event} from 'd3';
-import d3LogoUrl from './assets/d3-logo.svg';
 
 export const BasicComponent = {
     template,
     controller: class BasicComponent {
-        constructor($timeout, d3Behavior) {
+        constructor($timeout, d3Behaviors, d3BasicData, d3BounceBehavior, d3DraggableBehavior) {
             this.$timeout = $timeout;
-            this.d3LogoUrl = d3LogoUrl;
-            this.d3Behavior = d3Behavior;
+            this.d3Data = d3BasicData;
+            this.d3Behaviors = d3Behaviors;
+            this.d3BounceBehavior = d3BounceBehavior;
+            this.d3DraggableBehavior = d3DraggableBehavior;
         }
         $onInit() {
-            let self = this;
-            self.$timeout(function () {
-                self.initShapes();
-                self.initLineInterpolation();
-                self.initObjectGroup();
+            this.$timeout(() => {
+                this.initShapes();
+                this.initLineInterpolation();
+                this.initObjectGroup();
             });
         }
         initShapes() {
@@ -42,8 +42,8 @@ export const BasicComponent = {
                         .attr("cy", 50)
                         .attr("r", (circleSetting) => circleSetting.diameter)
                         .style("fill", (circleSetting) => circleSetting.color)
-                        .call(this.d3Behavior.draggable)
-                        .call(this.d3Behavior.bounce);
+                        .call(this.d3DraggableBehavior)
+                        .call(this.d3BounceBehavior);
             });
         }
         initLineInterpolation() {
@@ -110,8 +110,8 @@ export const BasicComponent = {
                     .append("rect");
 
             rectangles
-                    .call(this.d3Behavior.draggable)
-                    .call(this.d3Behavior.bounce);
+                    .call(this.d3DraggableBehavior)
+                    .call(this.d3BounceBehavior);
 
             let rectangleAttributes = rectangles
                     .attr("x", get('rx'))

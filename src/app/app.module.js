@@ -18,8 +18,4 @@ angular
             CommonModule,
             ComponentModule
         ])
-        .config(($locationProvider, $stateProvider) => {
-            "ngInject";
-            $locationProvider.html5Mode({enabled: true, requireBase: false}).hashPrefix('!');
-        })
         .component('appView', AppComponent);
