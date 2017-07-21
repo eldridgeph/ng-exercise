@@ -12,19 +12,19 @@
         </div>
     </div>
 
-    <uib-tabset active="$ctrl.$scope.activeTab">
-            <uib-tab index="0">
-                <uib-tab-heading>{{'BASIC'| translate}}</uib-tab-heading>
-                <d3-demo-basic></d3-demo-basic>
-            </uib-tab>
-            <uib-tab index="1">
-                <uib-tab-heading >{{'GRAPH'| translate}}</uib-tab-heading>
-                <d3-demo-graph></d3-demo-graph>
-            </uib-tab>
-            <uib-tab index="2">
-                <uib-tab-heading >{{'ANIMATION'| translate}}</uib-tab-heading>
-                <d3-demo-animation></d3-demo-animation>
-            </uib-tab>
-        </uib-tabset>
+    <uib-tabset active="$ctrl.activeTab">
+        <uib-tab index="0" ng-click="$ctrl.setTabActive(0)">
+            <uib-tab-heading  >{{'BASIC'| translate}}</uib-tab-heading>
+            <d3-demo-basic></d3-demo-basic>
+        </uib-tab>
+        <uib-tab index="1"  ng-click="$ctrl.setTabActive(1)">
+            <uib-tab-heading >{{'GRAPH'| translate}}</uib-tab-heading>
+            <d3-demo-graph></d3-demo-graph>
+        </uib-tab>
+        <uib-tab index="2" ng-click="$ctrl.setTabActive(2)">
+            <uib-tab-heading >{{'ANIMATION'| translate}}</uib-tab-heading>
+            <d3-demo-animation></d3-demo-animation>
+        </uib-tab>
+    </uib-tabset>
 
 </div>

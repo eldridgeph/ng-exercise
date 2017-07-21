@@ -30,14 +30,15 @@ export const AxisComponent = {
 
             let scaleFn = this.getScaler()
                     .domain([this.setDomain.start, this.setDomain.end])
-                    .range([this.setRange.start, this.setRange.end]);
+                    .range([this.setRange.start, this.setRange.end])
+                    .nice(d3.time.year);
 
-            let axis = d3.svg.axis();
-            let behavior = axis
+            this.axis = d3.svg.axis();
+            let behavior = this.axis
                     .orient(position)
                     .scale(scaleFn);
 
-            this.setFormat.callback && this.setFormat.callback(axis);
+            this.setFormat.callback && this.setFormat.callback.bind(this)(this.axis);
 
             let axisContainer = svg.append("g");
 

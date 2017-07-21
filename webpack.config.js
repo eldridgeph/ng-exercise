@@ -8,7 +8,7 @@ const WebpackConfig = {
         app: './src/app/app.module.js'
     },
     output: {
-        path: __dirname + '/client/',
+        path: __dirname + '/dist/',
         filename: 'scripts/[name].bundle.js'
     },
     module: {
@@ -21,7 +21,7 @@ const WebpackConfig = {
                     outputPath: './icons/'
                 }
             },
-            {test: /\.csv$/, loader: 'csv-loader', options: {dynamicTyping: true, header: true, skipEmptyLines: true}}
+            {test: /\.csv$/, loader: 'dsv-loader', options: {dynamicTyping: true, header: true, skipEmptyLines: true}}
         ]
     },
     plugins: [
@@ -37,10 +37,9 @@ const WebpackConfig = {
             "window.jQuery": "jquery",
             "d3": "d3"
         }),
-
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            minChunks: function (module, count) {
+            minChunks: function (module) {
                 return module.resource && module.resource.indexOf(path.resolve(__dirname, 'src')) === -1;
             }
         }),

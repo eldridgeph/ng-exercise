@@ -7,9 +7,9 @@ import {event as d3Event} from 'd3';
 export const BasicComponent = {
     template,
     controller: class BasicComponent {
-        constructor($timeout, d3Behaviors, d3BasicData, d3BounceBehavior, d3DraggableBehavior) {
+        constructor($timeout, d3Behaviors, globalAssets, d3BounceBehavior, d3DraggableBehavior) {
             this.$timeout = $timeout;
-            this.d3Data = d3BasicData;
+            this.globalAssets = globalAssets;
             this.d3Behaviors = d3Behaviors;
             this.d3BounceBehavior = d3BounceBehavior;
             this.d3DraggableBehavior = d3DraggableBehavior;

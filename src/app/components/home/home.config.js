@@ -5,7 +5,7 @@ export const uiRouting = ($stateProvider, $urlRouterProvider) => {
     "ngInject";
     $stateProvider
             .state('home', {
-                url: '/home/{tabId}',
+                url: '/home',
                 component: 'homeView'
             });
 };

@@ -5,6 +5,7 @@ import ngRouter from 'angular-ui-router';
 
 import './app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AssetsModule from '../assets/assets.module';
 
 import CommonModule from './common/common.module';
 import ComponentModule from './components/components.module';
@@ -15,6 +16,7 @@ angular
             ngTranslate,
             ngSanitize,
             ngRouter,
+            AssetsModule,
             CommonModule,
             ComponentModule
         ])
