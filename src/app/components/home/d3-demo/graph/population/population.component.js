@@ -50,7 +50,7 @@ export const PopulationComponent = {
                     .domain([new Date(1800, 1, 1), new Date(2015, 1, 1)])
                     .nice();
 
-            yAxis.domain([0, this.getMaxPopulation()]);
+            yAxis.domain([0, 300000000]);
 
             angular.forEach(this.getAssociativePopulation(), (associativePopulation) => {
                 mainGroup.append("path")
