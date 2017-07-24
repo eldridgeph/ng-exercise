@@ -1,3 +1,8 @@
-<common-ui-panel title="{{'GRAPH_POPULATION' | translate}}">
-    <svg width="100%" height="300" font-family="sans-serif" font-size="10" text-anchor="middle" id="population-graph" preserveAspectRatio="xMidYMid"></svg> 
+<common-ui-panel title="{{'GRAPH_POPULATION' | translate}}" column="12">
+    <div class="col-sm-8">
+        <svg width="100%" height="300" font-family="sans-serif" font-size="10" text-anchor="middle" id="population-graph" preserveAspectRatio="xMidYMid"></svg> 
+    </div>
+    <div class="col-sm-4">
+        <population-grid parent="$ctrl"></population-grid>
+    </div>
 </common-ui-panel>

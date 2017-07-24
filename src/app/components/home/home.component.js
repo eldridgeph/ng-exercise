@@ -5,7 +5,8 @@ import './home.css';
 export const HomeComponent = {
     template,
     controller: class HomeComponent {
-        constructor($log, $interval, $timeout, $scope, $location, loginService) {
+        constructor($log, $interval, $timeout, $scope, $location, loginService, $rootScope) {
+            this.$rootScope = $rootScope;
             this.$location = $location;
             this.$scope = $scope;
             this.$interval = $interval;
@@ -20,13 +21,14 @@ export const HomeComponent = {
         }
 
         setTabActive(tabId) {
-            console.log({tabId});
+            let event = `tab.active.where[id=${tabId}]`;
             this.$location.search({tabId: tabId});
+            this.$rootScope.$emit(event);
         }
 
         getActiveTab() {
             let tab = this.$location.search();
-            let tabId = tab.tabId || this.activeTab; 
+            let tabId = tab.tabId || this.activeTab;
             return tabId * 1;
         }
 
@@ -37,6 +39,7 @@ export const HomeComponent = {
 
         $onInit() {
             this.activeTab = this.getActiveTab();
+            angular.element(document).ready(() => this.$timeout(() => this.setTabActive(this.activeTab)));
         }
         $onChanges() {}
     }

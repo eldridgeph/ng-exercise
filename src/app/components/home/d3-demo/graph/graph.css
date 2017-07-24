@@ -11,3 +11,6 @@ path {
     stroke-width: 1;
     shape-rendering: crispEdges;
 }
+.axis text{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}

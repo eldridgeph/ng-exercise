@@ -21,6 +21,7 @@
     "angular-sanitize": "^1.6.5",
     "angular-translate": "^2.15.2",
     "angular-ui-bootstrap": "^2.5.0",
+    "angular-ui-grid": "^4.0.6",
     "angular-ui-router": "^1.0.3",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",

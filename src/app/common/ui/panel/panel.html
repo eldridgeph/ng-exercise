@@ -1,4 +1,4 @@
-<div class="panel panel-default col-sm-6">
-    <div class="panel-heading">{{ $ctrl.title | translate}}</div>
+<div class="panel panel-default" ng-class="$ctrl.getColumnClass()">
+    <div class="panel-heading">{{ $ctrl.title | translate}}</div> 
     <div class="panel-body" ng-transclude></div>
 </div>

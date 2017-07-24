@@ -5,16 +5,31 @@ import * as d3 from 'd3';
 export const PopulationComponent = {
     template,
     controller: class PopulationComponent {
-        constructor($timeout, globalAssets, d3Graph, d3Axis) {
+        constructor($scope, $timeout, globalAssets, d3Graph, d3Axis, uiGridConstants, $rootScope, d3Color) {
+            this.uiGridConstants = uiGridConstants;
+            this.$rootScope = $rootScope;
+            this.$scope = $scope;
             this.$timeout = $timeout;
             this.assocData = [];
             this.data = globalAssets.populationData;
             this.d3Graph = d3Graph;
             this.d3Axis = d3Axis;
+            this.gridComponent = null;
+            this.populationByCountryId = {};
+            this.drawInitialized = false;
+            this.d3Color = d3Color;
+            global.d3Color = d3Color;
         }
         $onInit() {
-            this.$timeout(() => {
-                this.draw();
+            this.$scope.$watch('gridComponent', (gridComponent) => {
+                this.$rootScope.$on('tab.active.where[id=1]', () => {
+                    if (gridComponent === undefined || this.drawInitialized) {
+                        return;
+                    }
+                    this.gridComponent = gridComponent;
+                    this.$timeout(() => this.draw());
+                    this.drawInitialized = true;
+                });
             });
         }
         draw() {
@@ -26,7 +41,6 @@ export const PopulationComponent = {
                     width = graph.width - margin.left - margin.right,
                     height = graph.height - margin.top - margin.bottom;
 
-            let parseDate = d3.time.format("%d-%b-%y").parse;
             let mainGroup = svg
                     .attr("width", '100%')
                     .attr("height", height + margin.top + margin.bottom)
@@ -34,7 +48,6 @@ export const PopulationComponent = {
                     .attr("transform", `translate(${margin.left},${margin.top})`);
 
             const assocData = this.getAssociativePopulation();
-            const scale = {thickness: 20};
 
             let xAxis = d3.time.scale().range([0, width]).nice();
             let yAxis = d3.scale.linear().range([height, 0]);
@@ -42,7 +55,7 @@ export const PopulationComponent = {
             let xScale = d3.svg.axis().scale(xAxis).orient("bottom").ticks(5);
             let yScale = d3.svg.axis().scale(yAxis).orient("left").ticks(5);
 
-            let line = d3.svg.line()
+            let d3Line = d3.svg.line()
                     .x((d) => xAxis(new Date(d.year, 1, 1)))
                     .y((d) => yAxis(d.population));
 
@@ -52,11 +65,14 @@ export const PopulationComponent = {
 
             yAxis.domain([0, 300000000]);
 
-            angular.forEach(this.getAssociativePopulation(), (associativePopulation) => {
-                mainGroup.append("path")
-                        .style('stroke', this.getRandomColor())
-                        .style('stroke-width', 1)
-                        .attr("d", line(associativePopulation));
+            angular.forEach(this.gridComponent.gridApi.selection.getSelectedRows(), (entity) => {
+                this.getLineElement({mainGroup, entity, d3Line});
+            });
+
+            this.$scope.$on('grid.rowSelectionChanged', (event, {row}) => {
+                let entity = row.entity;
+                let visibility = row.isSelected;
+                this.setLineVisibility({mainGroup, entity, d3Line, visibility});
             });
 
             mainGroup.append("g")
@@ -68,9 +84,32 @@ export const PopulationComponent = {
                     .attr("class", "y axis")
                     .style("fill", "steelblue")
                     .call(yScale);
-
         }
 
+        setLineVisibility( {mainGroup, entity, d3Line, visibility = false}) {
+            let lineElement = this.getLineElement({mainGroup, entity, d3Line});
+            lineElement
+                    .transition()
+                    .style('opacity', visibility ? 1 : 0);
+        }
+
+        getLineElement( {mainGroup, entity, d3Line}){
+            if (entity.lineElement) {
+                return entity.lineElement;
+            }
+
+            let associativePopulation = this.getPopulationByCountryId(entity.id);
+            let lineElement = mainGroup.append("path")
+                    .style('stroke', entity.color)
+                    .style('stroke-width', 3)
+                    .attr("d", d3Line(associativePopulation));
+
+            entity.lineElement = lineElement;
+
+            this.$timeout(() => lineElement.transition().style('stroke-width', 1), 100);
+
+            return entity.lineElement;
+        }
         createXAxis( {svg, scale, graph}) {
 
             let years = this.getYearsRange();
@@ -94,7 +133,6 @@ export const PopulationComponent = {
                 d3Axis
             };
         }
-
         createYAxis( {svg, scale, graph}){
             let scaleHeight = graph.height - (scale.thickness * 2);
             let d3Scale = d3.scale.linear()
@@ -116,27 +154,30 @@ export const PopulationComponent = {
                 d3Scale
             };
         }
-
-        getRandomColor() {
-            let metrocolors = this.getMetroColors();
-            return metrocolors[Math.round(Math.random() * (metrocolors.length - 1))];
+        getCountryById(id) {
+            this.getCountries();
+            return this.countriesById[id] || false;
         }
+        getCountries() {
 
-        getMetroColors() {
-            return [
-                'PURPLE',
-                'MAGENTA',
-                'TEAL',
-                'LIME',
-                'BROWN',
-                'PINK',
-                'ORANGE',
-                'BLUE',
-                'RED',
-                'GREEN'
-            ];
+            if (this.countries) {
+                return this.countries;
+            }
+
+            this.countries = [];
+            this.countriesById = {};
+            angular.forEach(this.data, (row, rowIndex) => {
+                if (rowIndex) {
+                    let id = rowIndex;
+                    let color = this.d3Color.getRandom();
+                    let country = {id, country: row['Total population'], color};
+                    this.countriesById[id] = country;
+                    this.countries.push(country);
+                }
+            });
+
+            return this.countries;
         }
-
         getYearsRange() {
             const columns = this.getIntegerColumns();
             const start = new Date(d3.min(columns), 1, 1);
@@ -147,7 +188,6 @@ export const PopulationComponent = {
                 end
             };
         }
-
         getMaxPopulation() {
             let highest = 0;
             angular.forEach(this.getAssociativePopulation(), (row) => {
@@ -157,36 +197,39 @@ export const PopulationComponent = {
             });
             return highest;
         }
-
         getAssociativePopulation() {
 
             if (this.assocData.length) {
                 return this.assocData;
             }
-
-            let countryColIndex = 'Total population';
+            let countryColIndex = 'Total population', color, country;
 
             angular.forEach(this.data, (row, rowIndex) => {
                 if (!rowIndex)
                     return;
                 let assocRow = [];
-                angular.forEach(row, function (population, year) {
+                angular.forEach(row, (population, year) => {
                     if (year === countryColIndex)
                         return;
                     year = year * 1;
                     population = parseInt((population + '').replace(/\,/, '')) || 0;
-                    assocRow.push({rowIndex, year, population});
+                    country = this.getCountryById(rowIndex);
+                    color = country.color;
+                    let data = {rowIndex, year, population, color};
+                    assocRow.push(data);
                 });
                 this.assocData[rowIndex] = assocRow;
             });
 
             return this.assocData;
         }
-
+        getPopulationByCountryId(countryId) {
+            let assocData = this.getAssociativePopulation();
+            return assocData[countryId] || false;
+        }
         getColumns() {
             return angular.isArray(this.data) && Object.keys(this.data[0] || {});
         }
-
         getIntegerColumns() {
             let columns = [];
             angular.forEach(this.getColumns(), (column) => {
